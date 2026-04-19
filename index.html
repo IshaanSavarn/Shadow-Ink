@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Shadow Ink | Elite Diagrams for Students</title>
+    <meta name="description" content="Level up your notes with precise, hand-crafted diagrams designed for ultimate clarity and academic impact. 100% hand-drawn for serious students.">
+    <meta name="theme-color" content="#070709">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Base Theme & Variables (DESKTOP STYLES - UNTOUCHED) */
+        :root {
+            --primary-glow: #ff3b3b;
+            --secondary-glow: #ff8c00;
+            --bg-dark: #070709;
+            --card-bg: rgba(20, 20, 25, 0.75);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-dark);
+            color: #e5e5e5;
+            overflow-x: hidden;
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+        }
+
+        /* Sticky Navbar */
+        .navbar-custom {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(7, 7, 9, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+        .navbar-custom.scrolled {
+            background: rgba(7, 7, 9, 0.9);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            padding: 10px 0;
+        }
+        .nav-link {
+            color: #a0a0a5 !important;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: #ffaa00 !important; }
+
+        /* Highly Optimized VFX Canvas */
+        #embers-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            filter: drop-shadow(0 0 4px rgba(255, 59, 59, 0.6));
+            will-change: transform; 
+        }
+
+        /* Premium Typography Updates */
+        h1, h2, h3, h4, h5, h6, .brand-font {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ff8c00, #ff0040);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .text-gold { color: #ffaa00; }
+        p { font-size: 1.1rem; color: #a0a0a5; font-weight: 400; letter-spacing: 0.3px; }
+
+        .content-wrapper { position: relative; z-index: 1; margin-top: 60px; }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 20px 100px;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(255,59,59,0.08) 0%, transparent 60%);
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero h1 {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .hero p.lead {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            font-weight: 400;
+        }
+
+        /* Buttons & CTAs */
+        .btn-glow {
+            background: linear-gradient(45deg, #111, #222);
+            color: #fff;
+            border: 1px solid rgba(255, 140, 0, 0.4);
+            border-radius: 4px;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            will-change: transform;
+        }
+        .btn-glow:hover {
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+            transform: translateY(-2px) translateZ(0);
+            border-color: #ff8c00;
+        }
+
+        /* Floating WhatsApp Button */
+        .fab-whatsapp {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            text-decoration: none;
+            animation: pulse-green 2s infinite;
+            transition: transform 0.3s ease;
+        }
+        .fab-whatsapp:hover { transform: scale(1.1); color: white; }
+        .fab-whatsapp svg { width: 35px; height: 35px; fill: currentColor; }
+        
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 40px 35px;
+            height: 100%;
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+            transform: translateZ(0);
+            will-change: transform;
+            position: relative;
+        }
+        .glass-card:hover {
+            transform: translateY(-8px) translateZ(0);
+            border-color: rgba(255, 140, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .price-tag {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            margin: 15px 0;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        /* Text Block / Paragraph Section */
+        .text-block { max-width: 800px; margin: 0 auto; }
+        .text-block p { margin-bottom: 25px; font-size: 1.15rem; line-height: 1.8; color: #b0b0b5; }
+
+        /* Step Process */
+        .step-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+            background: rgba(20, 20, 25, 0.5);
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 3px solid #ff8c00;
+            transition: transform 0.3s ease;
+        }
+        .step-box:hover { transform: translateX(10px); }
+        .step-num {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            color: #ff3b3b;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        /* Custom Accordion FAQ */
+        .accordion-item {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+            border-radius: 8px !important;
+            overflow: hidden;
+        }
+        .accordion-button {
+            background-color: rgba(20, 20, 25, 0.8);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            box-shadow: none !important;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(255, 140, 0, 0.1);
+            color: #ffaa00;
+        }
+        .accordion-button::after { filter: invert(1); }
+        .accordion-body {
+            background-color: rgba(15, 15, 18, 0.9);
+            color: #a0a0a5;
+        }
+
+        /* Offer Banner */
+        .offer-banner {
+            background: linear-gradient(135deg, rgba(20,0,0,0.9), rgba(40,10,0,0.9));
+            border: 1px solid rgba(255, 60, 0, 0.2);
+            border-radius: 12px;
+            padding: 50px 30px;
+            text-align: center;
+        }
+
+        /* Team Section */
+        .team-card { text-align: center; padding: 30px; }
+        .team-role {
+            color: #ffaa00; font-size: 0.9rem; letter-spacing: 2px;
+            text-transform: uppercase; font-weight: 600; margin-top: 5px;
+        }
+
+        /* Forms */
+        .form-control {
+            background: rgba(10, 10, 12, 0.9); border: 1px solid #333;
+            color: #fff; padding: 16px; border-radius: 6px; font-family: 'Montserrat', sans-serif;
+        }
+        .form-control:focus { background: #0f0f14; border-color: #ff8c00; box-shadow: none; color: #fff; }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 80px 20px 50px; text-align: center; background: #050505;
+        }
+        
+        .section-padding { padding: 100px 0; }
+
+        /* =========================================
+           MOBILE OPTIMIZATIONS (Only applies to phones)
+           ========================================= */
+        @media (max-width: 768px) {
+            .section-padding { padding: 60px 15px; }
+            .hero { padding: 100px 15px 50px; min-height: 80vh; }
+            .content-wrapper { margin-top: 50px; }
+            
+            /* Tweak padding for smaller screens */
+            .glass-card { padding: 30px 20px; }
+            .offer-banner { padding: 40px 20px; }
+            
+            /* Adjust fonts */
+            p { font-size: 1rem; }
+            .text-block p { font-size: 1.05rem; }
+            .price-tag { font-size: 3.2rem; }
+            
+            /* Stack the process boxes vertically for readability */
+            .step-box {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 25px 20px;
+                gap: 10px;
+                border-left: none;
+                border-top: 3px solid #ff8c00;
+            }
+            .step-box:hover { transform: translateY(-5px); }
+            
+            /* Scale down the WhatsApp button so it doesn't block content */
+            .fab-whatsapp {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+            .fab-whatsapp svg { width: 28px; height: 28px; }
+            
+            /* Carousel padding adjustment to leave room for arrows */
+            .carousel-item { padding: 20px 40px; }
+            
+            /* Center the text alignment better for phones */
+            .text-block { text-align: justify; hyphens: auto; }
+        }
+
+        /* Disable animations for users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+            #embers-canvas { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="embers-canvas"></canvas>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand brand-font text-gradient m-0" href="#" style="font-size: 1.5rem;">Shadow Ink</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#styles">Styles</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#process">Process</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#intel">Intel</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <a href="https://api.whatsapp.com/send?phone=919140004286&text=Hi%20Shadow%20Ink!%20I%20would%20like%20to%20order%20elite%20diagrams%20for%20my%20notes." target="_blank" rel="noopener noreferrer" class="fab-whatsapp" aria-label="Chat on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zM223.9 413.6c-33.6 0-66.5-9-95.2-26l-6.8-4-70.8 18.6 18.9-69-4.4-7c-18.6-29.6-28.5-64-28.5-99.3 0-103.6 84.4-188 188.1-188 50.2 0 97.4 19.6 132.9 55.1 35.5 35.5 55.1 82.7 55.1 133 0 103.6-84.4 188-188.1 188zm103.2-141.1c-5.7-2.8-33.6-16.6-38.8-18.5-5.2-1.9-9-2.8-12.8 2.8-3.8 5.7-14.7 18.5-18 22.3-3.3 3.8-6.6 4.3-12.3 1.4-5.7-2.8-24-8.9-45.8-28.4-16.9-15.2-28.3-34-31.6-39.7-3.3-5.7-.4-8.8 2.5-11.6 2.6-2.6 5.7-6.6 8.5-10 2.8-3.3 3.8-5.7 5.7-9.5 1.9-3.8.9-7.1-.5-10-1.4-2.8-12.8-30.8-17.5-42.2-4.6-11.1-9.3-9.6-12.8-9.8-3.3-.2-7.1-.2-10.9-.2-3.8 0-10 1.4-15.2 7.1-5.2 5.7-20 19.4-20 47.4 0 28 20.4 55 23.2 58.8 2.8 3.8 40 61.2 97 85.8 13.6 5.9 24.2 9.4 32.5 12 13.7 4.3 26.2 3.7 36 2.3 11-1.6 33.6-13.7 38.3-27 4.7-13.3 4.7-24.6 3.3-27-1.4-2.4-5.2-3.8-10.9-6.6z"/></svg>
+    </a>
+
+    <div class="content-wrapper">
+        <section class="hero" data-aos="fade-in" data-aos-duration="1000">
+            <h1 class="text-gradient">SHADOW INK</h1>
+            <h2 class="mb-4 text-white" style="letter-spacing: 1px; font-size: 1.4rem;">Elite Diagrams for Serious Students</h2>
+            <p class="lead">Stop losing marks to messy sketches. Level up your notes with precise, hand-crafted diagrams designed for ultimate clarity and academic impact.</p>
+            
+            <a href="https://api.whatsapp.com/send?phone=919140004286&text=Hi%20Shadow%20Ink!%20I%20would%20like%20to%20order%20elite%20diagrams%20for%20my%20notes." target="_blank" rel="noopener noreferrer" class="btn-glow mt-4">Order Your Diagrams</a>
+        </section>
+
+        <section class="container section-padding pt-0">
+            <div class="text-block" data-aos="fade-up">
+                <h2 class="text-center text-gradient mb-5">The Shadow Ink Protocol</h2>
+                <p>Let’s face reality: textbook diagrams are often overly complicated, cluttered, and impossible to replicate under exam pressure. Furthermore, spending two hours trying to perfectly draw a human heart or a complex circuit board wastes crucial study time that could be spent actually learning the material.</p>
+                <p><strong>Shadow Ink was forged to solve this exact problem.</strong> We believe that world-class notes require world-class visuals. Our mission is to provide students with high-fidelity, hand-drawn diagrams that perfectly balance scientific accuracy with clean, readable aesthetics.</p>
+            </div>
+        </section>
+
+        <section id="styles" class="container section-padding pt-0">
+            <h2 class="text-center text-gradient mb-5" data-aos="fade-up">Choose Your Style</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="glass-card text-center">
+                        <h3 class="text-white">Master</h3>
+                        <div class="price-tag">₹10</div>
+                        <p>Ultra-clean, high-detail diagrams forged for complex topics. Perfect for intricate biological systems, detailed geography maps, and advanced physics structures.</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="glass-card text-center">
+                        <h3 class="text-white">Regular</h3>
+                        <div class="price-tag">₹5</div>
+                        <p>Neat, mathematically accurate, and perfectly structured. Designed for everyday intensive study sessions, flowcharts, and standard concept mapping.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="container section-padding">
+            <h2 class="text-center text-gradient mb-5" data-aos="fade-up">How To Deploy</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="step-box" data-aos="fade-up" data-aos-delay="100">
+                        <div class="step-num">01</div>
+                        <div>
+                            <h4 class="text-white mb-2">Transmit the Target</h4>
+                            <p class="mb-0">Reach out via WhatsApp. Send the topic, a reference textbook image, or a rough sketch.</p>
+                        </div>
+                    </div>
+                    <div class="step-box" data-aos="fade-up" data-aos-delay="200">
+                        <div class="step-num">02</div>
+                        <div>
+                            <h4 class="text-white mb-2">Select Your Tier</h4>
+                            <p class="mb-0">Choose between the <strong>Regular (₹5)</strong> tier or the <strong>Master (₹10)</strong> tier for detailed subject matter.</p>
+                        </div>
+                    </div>
+                    <div class="step-box" data-aos="fade-up" data-aos-delay="300">
+                        <div class="step-num">03</div>
+                        <div>
+                            <h4 class="text-white mb-2">Receive the Masterpiece</h4>
+                            <p class="mb-0">Within the designated timeframe, receive a clean, hand-drawn digital copy ready for your notes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container section-padding pb-0" data-aos="zoom-in">
+            <div class="offer-banner">
+                <h3 class="text-gold mb-3">Bulk Order Directives</h3>
+                <p class="mb-0 mx-auto" style="max-width: 600px;">Unlock optimal pricing for full chapters and multi-diagram requests. Construct the ultimate study arsenal for your upcoming finals.</p>
+            </div>
+        </section>
+
+        <section id="faq" class="container section-padding">
+            <h2 class="text-center text-gradient mb-5" data-aos="fade-up">Frequently Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    How fast is the delivery time?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Most individual diagrams are delivered within 12 to 24 hours. If you have an urgent assignment, let us know via WhatsApp and we will prioritize it.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    In what format will I receive the diagram?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    You will receive a high-resolution, perfectly cropped digital scan directly to your WhatsApp. You can easily print it or import it into digital apps like GoodNotes.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    How do I pay?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Payments are securely handled via UPI once your order is confirmed on WhatsApp.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="intel" class="container section-padding text-center pt-0">
+            <h2 class="text-gradient mb-4" data-aos="fade-up">Student Intel</h2>
+            <div id="testimonialCarousel" class="carousel slide glass-card p-4 p-md-5" data-bs-ride="carousel" data-aos="fade-up">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" data-bs-interval="3500">
+                        <p class="text-light mb-3" style="font-size: 1.3rem; font-style: italic;">"The visual clarity was remarkable. Precise, professional, and easy to understand. Saved me hours."</p>
+                        <h6 class="text-gold">— Rudra Sharma</h6>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3500">
+                        <p class="text-light mb-3" style="font-size: 1.3rem; font-style: italic;">"Incredibly reliable. My go-to service for consistently high-quality assignment work."</p>
+                        <h6 class="text-gold">— Prakhar Bhatt</h6>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3500">
+                        <p class="text-light mb-3" style="font-size: 1.3rem; font-style: italic;">"The Master style diagrams completely elevated my biology notes. Looks like a printed textbook."</p>
+                        <h6 class="text-gold">— Brijesh Kumar Shukla</h6>
+                    </div>
+                    <div class="carousel-item" data-bs-interval="3500">
+                        <p class="text-light mb-3" style="font-size: 1.3rem; font-style: italic;">"Perfect notes to accompany the diagrams. Highly recommended for serious students."</p>
+                        <h6 class="text-gold">— Atharv Asthana</h6>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="container section-padding">
+            <h2 class="text-center text-gradient mb-5" data-aos="fade-up">The Architects</h2>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="team-card glass-card">
+                        <h4 class="text-white mb-0">Parth Gupta</h4>
+                        <div class="team-role">Founder & Lead Artist</div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="team-card glass-card">
+                        <h4 class="text-white mb-0">Rudra Sharma</h4>
+                        <div class="team-role">Marketing Supervisor</div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="team-card glass-card">
+                        <h4 class="text-white mb-0">Ishaan Savarn</h4>
+                        <div class="team-role">Web Designer & Tech Ops</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container" data-aos="fade-in">
+                <h3 class="text-gradient brand-font mb-3">SHADOW INK</h3>
+                <p class="mb-4">Comm Link: +91 91400 04286</p>
+                
+                <a href="https://api.whatsapp.com/send?phone=919140004286&text=Hi%20Shadow%20Ink!%20I%20would%20like%20to%20order%20elite%20diagrams%20for%20my%20notes." target="_blank" rel="noopener noreferrer" class="btn-glow mb-4">Initiate WhatsApp Comms</a>
+                
+                <p class="text-gold mt-3" style="font-family: 'Oswald', sans-serif; letter-spacing: 1px; font-size: 1.2rem;">"Turn boring notes into something you’ll actually want to revise."</p>
+                <p class="mt-5" style="font-size: 0.8rem; color: #555;">© 2026 Shadow Ink. Web Design by Ishaan Savarn.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('mainNav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Init AOS
+        window.addEventListener('load', () => {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-out',
+                once: true,
+                offset: 30
+            });
+        });
+
+        // --- High-Performance Embers Engine ---
+        const canvas = document.getElementById('embers-canvas');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let particlesArray = [];
+        let animationFrameId;
+        let isTabActive = true;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            if(resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }, 100);
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === 'visible') {
+                isTabActive = true;
+                animate();
+            } else {
+                isTabActive = false;
+                cancelAnimationFrame(animationFrameId);
+            }
+        });
+
+        class Particle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvas.height;
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 10;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = Math.random() * 1.5 + 0.5;
+                this.opacity = Math.random() * 0.7 + 0.1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y -= this.speedY;
+                if (this.size > 0.1) this.size -= 0.005;
+                if (this.y < 0 || this.size <= 0.1) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 80, 0, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            for (let i = 0; i < 40; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            if (!isTabActive) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (!mediaQuery.matches) {
+            init();
+            animate();
+        }
+    </script>
+</body>
+</html>
